@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, Piyasa! 🎂✨</title>
+  <style>
+    :root{
+      --bg1:#0f1024; --bg2:#1b1d4f; --accent:#ff67c4; --accent2:#7cf7ff; --gold:#ffd166;
+      --card:#131437ee; --white:#fff; --muted:#cdd7ff; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --good:#9dff7c; --sky:#7cf7ff; --pink:#ff9bd6;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:"Poppins", ui-sans-serif;
+      color:var(--white); background:
+        radial-gradient(1200px 800px at 10% 15%, #2a2d6a 0%, transparent 60%),
+        radial-gradient(900px 600px at 90% 10%, #3d1868 0%, transparent 60%),
+        linear-gradient(135deg,var(--bg1),var(--bg2)); overflow-x:hidden;
+    }
+
+    /* Floating balloons */
+    .balloon{position:fixed; bottom:-8vh; width:26px; height:36px; border-radius:50% 50% 45% 45%;
+      background:var(--accent); box-shadow:inset 0 -6px 12px rgba(0,0,0,.25); filter:saturate(1.2);
+      animation:floatUp 16s linear infinite; z-index:0; opacity:.85}
+    .balloon:after{content:""; position:absolute; bottom:-12px; left:50%; width:2px; height:14vh; background:#ffffff40}
+    .b2{background:var(--accent2); animation-duration:18s}
+    .b3{background:#9dff7c; animation-duration:20s}
+    .b4{background:#ffcd7c; animation-duration:22s}
+    @keyframes floatUp{0%{transform:translateY(0) translateX(0)} 100%{transform:translateY(-120vh) translateX(-6vw)}}
+
+    header{text-align:center; padding:48px 16px 0; position:relative; z-index:1}
+    .title{font-size:clamp(28px,6vw,60px); font-weight:800; letter-spacing:.5px;
+      background:linear-gradient(90deg, var(--gold), var(--accent), var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .subtitle{margin:10px auto 18px; max-width:880px; color:var(--muted);}    
+    .start-row{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px}
+    button{appearance:none; border:none; cursor:pointer; padding:12px 16px; border-radius:14px; font-weight:600}
+    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#0b0b19; box-shadow:0 6px 18px #00000050}
+    .btn-ghost{background:#ffffff12; color:#fff; border:1px solid #ffffff20}
+
+    .wrap{display:grid; gap:24px; padding:24px; max-width:1200px; margin:0 auto}
+    .card{background:var(--card); border-radius:24px; box-shadow:var(--shadow); overflow:hidden; padding:20px; position:relative}
+
+    .frame{position:relative; border-radius:22px; overflow:hidden}
+    .frame img{width:100%; display:block; border-radius:22px; transform:scale(1.02); filter:contrast(1.05) saturate(1.08) brightness(1.06)}
+    .frame:after{content:""; position:absolute; inset:0; box-shadow:inset 0 0 160px #00000088; pointer-events:none}
+
+    /* Slideshow */
+    .slideshow .viewer{position:relative; height:min(62vh,560px); border-radius:18px; overflow:hidden; background:#0d0f28;}
+    .slideshow .viewer img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease, transform 7s ease; transform:scale(1.02)}
+    .slideshow .viewer img.active{opacity:1; transform:scale(1.08)}
+    .caption{font-size:14px; color:var(--muted); margin-top:10px; text-align:center}
+
+    .controls{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0 12px}
+    .left, .right{display:flex; gap:8px; align-items:center}
+    .iconbtn{padding:10px 12px; border-radius:10px; background:#ffffff12; border:1px solid #ffffff20; color:#fff}
+
+    footer{padding:24px; text-align:center; color:#aabaff; font-size:13px}
+
+    #confetti{position:fixed; inset:0; pointer-events:none; z-index:3}
+
+    /* Alexa-style robot */
+    .assistant{position:fixed; right:18px; bottom:18px; z-index:4; display:flex; align-items:flex-end; gap:12px}
+    .bubble{max-width:280px; background:#0f1738; color:#fff; border:1px solid #ffffff2b; padding:12px 14px; border-radius:16px; box-shadow:0 12px 28px #00000065; transform-origin:100% 100%; opacity:0; transform:scale(.8) translateY(16px);}
+    .bubble.show{animation:pop .4s ease forwards}
+    @keyframes pop{to{opacity:1; transform:scale(1) translateY(0)}}
+    .robot{width:92px; height:92px; position:relative; filter:drop-shadow(0 10px 20px #00000060)}
+    .halo{position:absolute; inset:-20%; background:radial-gradient(50% 50% at 50% 50%, #64fff530 0%, transparent 60%); mix-blend-mode:screen}
+    .bot{width:100%; height:100%}
+    .eye{animation:blink 5s linear infinite}
+    @keyframes blink{0%,96%,100%{transform:scaleY(1)} 97%,99%{transform:scaleY(.1)}}
+    .hand{transform-origin:80% 20%; animation:wave 2s ease-in-out infinite}
+    @keyframes wave{0%,100%{transform:rotate(0deg)} 50%{transform:rotate(18deg)}}
+
+    /* Surprise end message */
+    .final{position:fixed; inset:0; display:grid; place-items:center; pointer-events:none; z-index:2}
+    .final h2{font-size:clamp(24px,6vw,56px); margin:0; padding:14px 20px; border-radius:18px; background:#131437cc; border:1px solid #ffffff2b; box-shadow:0 20px 50px #00000085;
+      background-image:linear-gradient(90deg,var(--gold),var(--accent),var(--accent2)); -webkit-background-clip:text; color:transparent; text-shadow:0 0 30px #ffffff22}
+    .final.hide{display:none}
+  </style>
+</head>
+<body>
+  <!-- Balloons (decor) -->
+  <div class="balloon" style="left:10vw"></div>
+  <div class="balloon b2" style="left:25vw"></div>
+  <div class="balloon b3" style="left:60vw"></div>
+  <div class="balloon b4" style="left:80vw"></div>
+
+  <canvas id="confetti"></canvas>
+
+  <header>
+    <h1 class="title">Happy Birthday, <span id="name">Piyasa</span>! 💖</h1>
+    <p class="subtitle">A sparkly little site with music, memories, balloons, confetti — and your very own robot assistant! 🤖🎈</p>
+    <div class="start-row">
+      <button class="btn-primary" id="start">Start Celebration 🎉</button>
+      <button class="btn-ghost" id="toggleMusic">⏸ Music</button>
+      <button class="btn-ghost" id="toggleVoice">🔊 Voice: On</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO PHOTO -->
+    <section class="card">
+      <div class="frame">
+        <img src="image10.png" alt="Birthday Girl" />
+      </div>
+    </section>
+
+    <!-- SLIDESHOW -->
+    <section class="card slideshow">
+      <div class="controls">
+        <div class="left">
+          <button class="iconbtn" id="prev">⟨ Prev</button>
+          <button class="iconbtn" id="next">Next ⟩</button>
+          <button class="iconbtn" id="auto">▶ Auto</button>
+        </div>
+        <div class="right">
+          <span id="counter">1 / 4</span>
+        </div>
+      </div>
+      <div class="viewer" id="viewer">
+        <img src="image1.jpg" class="active" alt="Memory 1" />
+        <img src="image2.jpg" alt="Memory 2" />
+        <img src="image3.jpg" alt="Memory 3" />
+        <img src="image4.jpg" alt="Memory 4" />
+        <img src="image5.jpg" alt="Memory 5" />
+        <img src="image6.jpg" alt="Memory 6" />
+        <img src="image7.jpg" alt="Memory 7" />
+        <img src="image8.jpg" alt="Memory 8" />
+      </div>
+      <div class="caption" id="caption">Memory 1</div>
+    </section>
+  </main>
+
+  <footer>Made with 💜 for <strong>Piyasa</strong> — pretty, playful & unforgettable.</footer>
+
+<style>
+  /* HERO circular glassy style */
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px;
+  }
+  .hero-frame {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px) saturate(160%);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,.4), 0 0 25px rgba(124, 247, 255, 0.4);
+    animation: floaty 5s ease-in-out infinite;
+  }
+  .hero-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @keyframes floaty {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-14px); }
+  }
+
+  /* SLIDESHOW 1:1 glassy style */
+  .slideshow .viewer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 560px;
+    margin: 0 auto;
+    border-radius: 22px;
+    overflow: hidden;
+    background: rgba(19, 20, 55, 0.65);
+    backdrop-filter: blur(10px) saturate(150%);
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 35px rgba(0,0,0,.5), 0 0 30px rgba(255, 103, 196, 0.3);
+  }
+  .slideshow .viewer img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity .7s ease, transform 7s ease;
+    transform: scale(1.02);
+  }
+  .slideshow .viewer img.active {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+</style>
+
+  <!-- Alexa-style Robot Assistant -->
+  <div class="assistant" id="assistant">
+    <div class="bubble" id="bubble">Hello <strong>Piyasa</strong>, I’m Alexa 🤖 — Wishing you a very <strong>Happy Birthday</strong>! May your day be as amazing as you are! 🎂✨</div>
+    <div class="robot" aria-hidden="true">
+      <div class="halo"></div>
+      <!-- Simple SVG robot -->
+      <svg class="bot" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1">
+            <stop offset="0%" stop-color="#7cf7ff"/>
+            <stop offset="100%" stop-color="#ff67c4"/>
+          </linearGradient>
+        </defs>
+        <!-- body -->
+        <rect x="28" y="46" rx="18" ry="18" width="84" height="70" fill="#141a4a" stroke="url(#g1)" stroke-width="3"/>
+        <!-- antenna -->
+        <line x1="70" y1="28" x2="70" y2="46" stroke="#7cf7ff" stroke-width="3"/>
+        <circle cx="70" cy="26" r="6" fill="#ff67c4"/>
+        <!-- eyes -->
+        <g transform="translate(0,6)">
+          <rect x="46" y="58" width="18" height="12" rx="6" fill="#0cf"/>
+          <rect x="76" y="58" width="18" height="12" rx="6" fill="#0cf"/>
+          <rect class="eye" x="46" y="58" width="18" height="12" rx="6" fill="#0cf"/>
+          <rect class="eye" x="76" y="58" width="18" height="12" rx="6" fill="#0cf"/>
+        </g>
+        <!-- smile -->
+        <path d="M52 96 Q70 110 88 96" stroke="#7cf7ff" stroke-width="3" fill="none"/>
+        <!-- right hand (waving) -->
+        <g class="hand">
+          <rect x="110" y="62" width="8" height="32" rx="4" fill="#141a4a" stroke="#7cf7ff" stroke-width="2"/>
+          <circle cx="114" cy="60" r="7" fill="#141a4a" stroke="#7cf7ff" stroke-width="2"/>
+        </g>
+        <!-- left hand -->
+        <rect x="22" y="62" width="8" height="32" rx="4" fill="#141a4a" stroke="#7cf7ff" stroke-width="2"/>
+        <circle cx="26" cy="60" r="7" fill="#141a4a" stroke="#7cf7ff" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Final surprise overlay -->
+  <div class="final hide" id="final">
+    <h2>Once again… Happy Birthday, <span id="finalName">Piyasa</span>! 🎂💖 You are loved beyond words.</h2>
+  </div>
+
+  <script>
+    // ============ BASIC ELEMENTS ============
+    const viewer = document.getElementById('viewer');
+    const slides = viewer.querySelectorAll('img');
+    const caption = document.getElementById('caption');
+    const counter = document.getElementById('counter');
+    const startBtn = document.getElementById('start');
+    const nextBtn = document.getElementById('next');
+    const prevBtn = document.getElementById('prev');
+    const autoBtn = document.getElementById('auto');
+    const music = document.getElementById('music');
+    const toggleMusic = document.getElementById('toggleMusic');
+
+    // Alexa assistant
+    const assistant = document.getElementById('assistant');
+    const bubble = document.getElementById('bubble');
+    const finalOverlay = document.getElementById('final');
+
+    const NAME = 'Piyasa';
+
+    // ============ SLIDESHOW LOGIC ============
+    let idx = 0, playing = false, timer=null, slideDur=3600;
+
+    function setSlide(i){
+      idx = (i + slides.length) % slides.length;
+      slides.forEach((s, j)=> s.classList.toggle('active', j===idx));
+      caption.textContent = 'Memory ' + (idx+1);
+      counter.textContent = (idx+1) + ' / ' + slides.length;
+      burst(60);
+      // If we looped back to the first slide, trigger the final surprise just before restart
+      if(idx === slides.length-1 && playing){
+        setTimeout(()=>{
+          speak(`Once again, Happy Birthday ${NAME}! You are loved beyond words. Have the best year ahead!`);
+          showFinal();
+          setTimeout(()=> hideFinal(), 3000);
+        }, slideDur-800);
+      }
+    }
+
+    function next(){ setSlide(idx+1); }
+    function prev(){ setSlide(idx-1); }
+
+    function play(){ if(playing) return; playing=true; autoBtn.textContent='⏸ Auto'; cycle(); }
+    function pause(){ playing=false; autoBtn.textContent='▶ Auto'; clearTimeout(timer); }
+
+    function cycle(){ if(!playing) return; timer = setTimeout(()=>{ next(); cycle(); }, slideDur); }
+
+    autoBtn.addEventListener('click', ()=> playing ? pause() : play());
+    nextBtn.addEventListener('click', ()=>{ pause(); next(); });
+    prevBtn.addEventListener('click', ()=>{ pause(); prev(); });
+
+    // Hover tilt on viewer
+    viewer.addEventListener('mousemove', (e)=>{
+      const r = viewer.getBoundingClientRect();
+      const cx = (e.clientX - r.left) / r.width - .5;
+      const cy = (e.clientY - r.top) / r.height - .5;
+      viewer.style.transform = `perspective(700px) rotateX(${-cy*3}deg) rotateY(${cx*3}deg)`;
+    });
+    viewer.addEventListener('mouseleave', ()=> viewer.style.transform='');
+    
+
+    // ============ MUSIC CONTROLS ============
+    let musicReady = false;
+    toggleMusic.addEventListener('click', ()=>{
+      if(music.paused){ music.play().catch(()=>{}); toggleMusic.textContent='⏸ Music'; }
+      else{ music.pause(); toggleMusic.textContent='▶ Music'; }
+    });
+
+    startBtn.addEventListener('click', async()=>{
+      try{ await music.play(); toggleMusic.textContent='⏸ Music'; }catch(e){}
+      greet();
+      play();
+      burst(200);
+    });
+
+    // Try to start quietly on load (may fail without user gesture)
+    window.addEventListener('load', ()=>{ music.volume = 0.9; });
+
+    // ============ CONFETTI ============
+    const cnv=document.getElementById('confetti');
+    const ctx=cnv.getContext('2d');
+    let W,H; function resize(){W=cnv.width=innerWidth;H=cnv.height=innerHeight;} resize();
+    addEventListener('resize',resize);
+    let confetti=[]; const palette=["#ff67c4","#7cf7ff","#ffd166","#9dff7c","#c29bff"];
+    function spawn(n=150){for(let i=0;i<n;i++){confetti.push({x:Math.random()*W,y:-20-Math.random()*H,r:3+Math.random()*5,s:1+Math.random()*2,a:Math.random()*Math.PI*2,col:palette[Math.floor(Math.random()*palette.length)]});}}
+    function draw(){ctx.clearRect(0,0,WW,H);}
+    function loop(){
+      ctx.clearRect(0,0,W,H);
+      confetti.forEach(p=>{p.y+=p.s; p.x += Math.sin(p.a+=0.03); ctx.fillStyle=p.col; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();});
+      confetti = confetti.filter(p=>p.y < H+10);
+      requestAnimationFrame(loop);
+    } loop();
+    function burst(n=160){ spawn(n); }
+
+    // ============ ALEXA ROBOT (TTS) ============
+    let voiceOn = true;
+    const toggleVoice = document.getElementById('toggleVoice');
+    toggleVoice.addEventListener('click', ()=>{ voiceOn = !voiceOn; toggleVoice.textContent = voiceOn ? '🔊 Voice: On' : '🔇 Voice: Off'; });
+
+    function showBubble(text){
+      bubble.innerHTML = text; bubble.classList.remove('show');
+      // small delay for reflow
+      setTimeout(()=> bubble.classList.add('show'), 20);
+    }
+
+    function speak(text){
+      showBubble(text);
+      if(!voiceOn) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      // Try to pick a pleasant female voice if available
+      const pickVoice = ()=>{
+        const list = speechSynthesis.getVoices();
+        const pref = list.find(v => /India|en-IN|Indian English/i.test(v.name + v.lang))
+    || list.find(v => /Google UK English Female|Microsoft (.+?) Online Natural|Female/i.test(v.name))
+    || list.find(v => /en-|English/i.test(v.lang))
+    || list[0];
+        if(pref) utter.voice = pref;
+        speechSynthesis.speak(utter);
+      };
+      if(speechSynthesis.getVoices().length){ pickVoice(); } else { speechSynthesis.onvoiceschanged = pickVoice; }
+    }
+
+    function greet(){
+      speak(`Hello ${NAME}, I am Alexa. Wishing you a very Happy Birthday! May your day be as amazing as you are.`);
+    }
+
+    function showFinal(){ finalOverlay.classList.remove('hide'); burst(200); }
+    function hideFinal(){ finalOverlay.classList.add('hide'); }
+
+    // ============ INIT ============
+    setSlide(0);
+    // greet once after a short delay in case user doesn't click Start (no voice until interaction on some browsers)
+    setTimeout(()=>{ showBubble(`Hello <strong>${NAME}</strong>, I’m Alexa 🤖 — Happy Birthday! 🎂✨`); }, 1200);
+  </script>
+</body>
+</html>
